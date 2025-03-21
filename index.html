@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-book-open"></i> Library Management System</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+                    <li><a href="#" class="nav-link" data-page="books"><i class="fas fa-book"></i> Books</a></li>
+                    <li><a href="#" class="nav-link" data-page="members"><i class="fas fa-users"></i> Members</a></li>
+                    <li><a href="#" class="nav-link" data-page="transactions"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                    <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-info-circle"></i> About</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard Page -->
+            <section id="dashboard" class="page active">
+                <div class="page-header">
+                    <h2><i class="fas fa-chart-line"></i> Dashboard</h2>
+                    <div class="date-display" id="current-date"></div>
+                </div>
+                
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <h3>Total Books</h3>
+                        <div class="stat-value" id="total-books">0</div>
+                        <div class="stat-icon"><i class="fas fa-book"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Members</h3>
+                        <div class="stat-value" id="total-members">0</div>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Books Borrowed</h3>
+                        <div class="stat-value" id="books-borrowed">0</div>
+                        <div class="stat-icon"><i class="fas fa-hand-holding-heart"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Books Available</h3>
+                        <div class="stat-value" id="books-available">0</div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                </div>
+                
+                <div class="page-header">
+                    <h2><i class="fas fa-clock"></i> Recent Activities</h2>
+                </div>
+                
+                <div class="table-container">
+                    <table id="recent-activities-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Details</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Recent activities will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Books Page -->
+            <section id="books" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-book"></i> Library Books</h2>
+                    <button id="add-book-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Book</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="book-search" placeholder="Search by title or author...">
+                    <button id="book-search-btn" class="btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+                <div class="table-container">
+                    <table id="books-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Category</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Book data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Members Page -->
+            <section id="members" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-users"></i> Library Members</h2>
+                    <button id="add-member-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Member</button>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="member-search" placeholder="Search by name or email...">
+                    <button id="member-search-btn" class="btn"><i class="fas fa-search"></i> Search</button>
+                </div>
+                <div class="table-container">
+                    <table id="members-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Books Borrowed</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Member data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Transactions Page -->
+            <section id="transactions" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-exchange-alt"></i> Book Transactions</h2>
+                    <button id="issue-book-btn" class="btn btn-primary"><i class="fas fa-plus"></i> Issue Book</button>
+                </div>
+                <div class="filter-container">
+                    <select id="transaction-filter">
+                        <option value="all">All Transactions</option>
+                        <option value="active">Active Only</option>
+                        <option value="returned">Returned Only</option>
+                        <option value="overdue">Overdue Only</option>
+                    </select>
+                    <span id="transaction-count" class="count-badge">0 transactions</span>
+                </div>
+                <div class="table-container">
+                    <table id="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Book</th>
+                                <th>Member</th>
+                                <th>Issue Date</th>
+                                <th>Due Date</th>
+                                <th>Return Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Transaction data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+            
+            <!-- About Page -->
+            <section id="about" class="page">
+                <div class="page-header">
+                    <h2><i class="fas fa-info-circle"></i> About Library Management System</h2>
+                </div>
+                <div class="about-content">
+                    <p>The Library Management System is a comprehensive solution designed to streamline the operations of libraries of all sizes. Our system helps librarians and administrators efficiently manage books, members, and lending processes.</p>
+                    
+                    <h3>Key Features</h3>
+                    <ul>
+                        <li><i class="fas fa-check"></i> Complete book inventory management</li>
+                        <li><i class="fas fa-check"></i> Member registration and profile management</li>
+                        <li><i class="fas fa-check"></i> Easy book lending and return tracking</li>
+                        <li><i class="fas fa-check"></i> Powerful search and filtering capabilities</li>
+                        <li><i class="fas fa-check"></i> Dashboard with real-time statistics</li>
+                        <li><i class="fas fa-check"></i> Activity logs and reports</li>
+                    </ul>
+                    
+                    <h3>System Requirements</h3>
+                    <p>This application requires a modern web browser with JavaScript enabled. For optimal performance, we recommend using the latest versions of Chrome, Firefox, or Edge.</p>
+                    
+                    <h3>Contact Support</h3>
+                    <p>If you encounter any issues or have questions about the Library Management System, please contact our support team at <a href="mailto:support@librarysystem.com">support@librarysystem.com</a>.</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer>
+            <p>&copy; 2023 Library Management System - All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <!-- Modal for adding a new book -->
+    <div id="add-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-plus"></i> Add New Book</h2>
+            <form id="add-book-form">
+                <div class="form-group">
+                    <label for="book-title">Title:</label>
+                    <input type="text" id="book-title" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-author">Author:</label>
+                    <input type="text" id="book-author" required>
+                </div>
+                <div class="form-group">
+                    <label for="book-category">Category:</label>
+                    <select id="book-category" required>
+                        <option value="">Select a category</option>
+                        <option value="Fiction">Fiction</option>
+                        <option value="Non-Fiction">Non-Fiction</option>
+                        <option value="Science">Science</option>
+                        <option value="History">History</option>
+                        <option value="Biography">Biography</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Literature">Literature</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="book-isbn">ISBN:</label>
+                    <input type="text" id="book-isbn">
+                </div>
+                <div class="form-group">
+                    <label for="book-published">Publication Year:</label>
+                    <input type="number" id="book-published" min="1800" max="2099">
+                </div>
+                <button type="submit" class="btn btn-primary">Add Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for adding a new member -->
+    <div id="add-member-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-user-plus"></i> Add New Member</h2>
+            <form id="add-member-form">
+                <div class="form-group">
+                    <label for="member-name">Name:</label>
+                    <input type="text" id="member-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="member-email">Email:</label>
+                    <input type="email" id="member-email" required>
+                </div>
+                <div class="form-group">
+                    <label for="member-phone">Phone:</label>
+                    <input type="text" id="member-phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="member-address">Address:</label>
+                    <textarea id="member-address" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Add Member</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for issuing a book -->
+    <div id="issue-book-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-book"></i> Issue Book</h2>
+            <form id="issue-book-form">
+                <div class="form-group">
+                    <label for="issue-book-id">Book:</label>
+                    <select id="issue-book-id" required>
+                        <option value="">Select a book</option>
+                        <!-- Available books will be loaded here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issue-member-id">Member:</label>
+                    <select id="issue-member-id" required>
+                        <option value="">Select a member</option>
+                        <!-- Members will be loaded here -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="issue-due-date">Due Date:</label>
+                    <input type="date" id="issue-due-date" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Issue Book</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Book Details Modal -->
+    <div id="book-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-book"></i> Book Details</h2>
+            <div id="book-details-content">
+                <!-- Book details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Member Details Modal -->
+    <div id="member-details-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><i class="fas fa-user"></i> Member Details</h2>
+            <div id="member-details-content">
+                <!-- Member details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 
